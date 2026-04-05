@@ -44,19 +44,42 @@ export default function ProfessionalsPage() {
   const [patientMap, setPatientMap] = useState({}) // nome → { count, consultas }
   const [selectedProf, setSelectedProf] = useState(null)
 
+  const MOCK_PROFS = [
+    {id:'p1',nome:'Dra. Camila Torres',esp:'Fisioterapia',crm:'CREFITO 12.345-F',sala:'Sala 1 — Fisioterapia',bio:'Fisioterapeuta com 12 anos de experiência em reabilitação ortopédica e esportiva.'},
+    {id:'p2',nome:'Dr. Rafael Nunes',esp:'Nutrição',crm:'CRN-3 54.321',sala:'Sala 2 — Nutrição',bio:'Nutricionista especializado em nutrição funcional e terapêutica metabólica.'},
+    {id:'p3',nome:'Dra. Beatriz Lemos',esp:'Psicologia',crm:'CRP 06/98765',sala:'Sala 3 — Psicologia',bio:'Psicóloga clínica com abordagem cognitivo-comportamental.'},
+    {id:'p4',nome:'Dr. André Melo',esp:'Fisioterapia',crm:'CREFITO 18.902-F',sala:'Sala 4 — Fisioterapia',bio:'Fisioterapeuta especializado em reabilitação esportiva e postural.'},
+  ]
+  const MOCK_PAT_MAP = {
+    'Dra. Camila Torres': { count: 6, consultas: 58 },
+    'Dr. Rafael Nunes':   { count: 5, consultas: 56 },
+    'Dra. Beatriz Lemos': { count: 6, consultas: 54 },
+    'Dr. André Melo':     { count: 3, consultas: 38 },
+  }
+
   useEffect(() => {
     getProfessionals().then(data => {
-      setProfs(isProfissional ? data.filter(p => p.nome === profNome) : data)
+      if (data && data.length > 0) {
+        setProfs(isProfissional ? data.filter(p => p.nome === profNome) : data)
+      } else {
+        setProfs(isProfissional ? MOCK_PROFS.filter(p => p.nome === profNome) : MOCK_PROFS)
+      }
+    }).catch(() => {
+      setProfs(isProfissional ? MOCK_PROFS.filter(p => p.nome === profNome) : MOCK_PROFS)
     })
     getPatients().then(patients => {
-      const map = {}
-      patients.forEach(p => {
-        if (!map[p.prof]) map[p.prof] = { count: 0, consultas: 0 }
-        map[p.prof].count++
-        map[p.prof].consultas += p.visitCount || 0
-      })
-      setPatientMap(map)
-    }).catch(() => {})
+      if (patients && patients.length > 0) {
+        const map = {}
+        patients.forEach(p => {
+          if (!map[p.prof]) map[p.prof] = { count: 0, consultas: 0 }
+          map[p.prof].count++
+          map[p.prof].consultas += p.visitCount || 0
+        })
+        setPatientMap(map)
+      } else {
+        setPatientMap(MOCK_PAT_MAP)
+      }
+    }).catch(() => { setPatientMap(MOCK_PAT_MAP) })
   }, [isProfissional, profNome])
 
   return (
