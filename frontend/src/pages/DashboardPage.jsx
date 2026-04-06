@@ -223,11 +223,6 @@ export default function DashboardPage() {
         setPatients(pats || [])
         setAppointments(appts || [])
         setProfessionals(profs || [])
-        if (isAdmin) {
-          const [s, fins] = await Promise.all([getFinanceSummary(), getFinances()])
-          setSummary(s || {})
-          setFinances(fins || [])
-        }
       } catch (e) {
         console.error(e)
         setPatients([])
@@ -235,6 +230,15 @@ export default function DashboardPage() {
         setProfessionals([])
       } finally {
         setLoading(false)
+      }
+      if (isAdmin) {
+        try {
+          const [s, fins] = await Promise.all([getFinanceSummary(), getFinances()])
+          setSummary(s || {})
+          setFinances(fins || [])
+        } catch (e) {
+          console.error('finances error', e)
+        }
       }
     }
     load()

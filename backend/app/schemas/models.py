@@ -128,7 +128,7 @@ class AppointmentOut(AppointmentCreate):
 
 # ── Finance ──────────────────────────────────────────────
 class FinanceCreate(BaseModel):
-    pacId:    str
+    pacId:    Optional[str] = None
     pacNome:  str
     svc:      str
     prof:     str
