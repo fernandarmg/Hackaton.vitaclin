@@ -211,38 +211,6 @@ export default function DashboardPage() {
   const [professionals,setProfessionals]= useState([])
   const [loading,      setLoading]      = useState(true)
 
-  const MOCK_PATS = [
-    {id:'m1',nome:'Ana Beatriz Ferreira',esp:'Fisioterapia',prof:'Dra. Camila Torres',plano:'Premium',freqPresc:'2x/semana',lastVisit:'2026-04-02',visitCount:14,status:'em_tratamento'},
-    {id:'m2',nome:'Carlos Eduardo Lima',esp:'Nutrição',prof:'Dr. Rafael Nunes',plano:'Fidelidade',freqPresc:'Semanal',lastVisit:'2026-04-02',visitCount:18,status:'em_tratamento'},
-    {id:'m3',nome:'Fernanda Costa Alves',esp:'Psicologia',prof:'Dra. Beatriz Lemos',plano:'Premium',freqPresc:'Semanal',lastVisit:'2026-03-27',visitCount:11,status:'em_tratamento'},
-    {id:'m4',nome:'Roberto Mendonça',esp:'Fisioterapia',prof:'Dra. Camila Torres',plano:'Básico',freqPresc:'Quinzenal',lastVisit:'2026-02-26',visitCount:6,status:'em_tratamento'},
-    {id:'m5',nome:'Juliana Martins',esp:'Nutrição',prof:'Dr. Rafael Nunes',plano:'Premium',freqPresc:'Quinzenal',lastVisit:'2026-04-01',visitCount:12,status:'em_tratamento'},
-    {id:'m6',nome:'Marcelo Souza',esp:'Psicologia',prof:'Dra. Beatriz Lemos',plano:'Premium',freqPresc:'Semanal',lastVisit:'2026-04-02',visitCount:9,status:'em_tratamento'},
-    {id:'m7',nome:'Patrícia Almeida',esp:'Fisioterapia',prof:'Dra. Camila Torres',plano:'Fidelidade',freqPresc:'2x/semana',lastVisit:'2026-04-01',visitCount:16,status:'em_tratamento'},
-    {id:'m8',nome:'Gabriel Teixeira',esp:'Nutrição',prof:'Dr. Rafael Nunes',plano:'Fidelidade',freqPresc:'Semanal',lastVisit:'2026-04-02',visitCount:20,status:'em_tratamento'},
-    {id:'m9',nome:'Thiago Nascimento',esp:'Psicologia',prof:'Dra. Beatriz Lemos',plano:'Fidelidade',freqPresc:'Semanal',lastVisit:'2026-03-31',visitCount:15,status:'em_tratamento'},
-    {id:'m10',nome:'Isabela Rodrigues',esp:'Fisioterapia',prof:'Dra. Camila Torres',plano:'Fidelidade',freqPresc:'2x/semana',lastVisit:'2026-04-02',visitCount:13,status:'em_tratamento'},
-    {id:'m11',nome:'Diego Barbosa',esp:'Fisioterapia',prof:'Dra. Camila Torres',plano:'Premium',freqPresc:'2x/semana',lastVisit:'2026-04-01',visitCount:10,status:'em_tratamento'},
-    {id:'m12',nome:'Felipe Cunha',esp:'Psicologia',prof:'Dra. Beatriz Lemos',plano:'Premium',freqPresc:'Semanal',lastVisit:'2026-04-01',visitCount:11,status:'alta'},
-    {id:'m13',nome:'Bruno Cavalcanti',esp:'Fisioterapia',prof:'Dr. André Melo',plano:'Fidelidade',freqPresc:'2x/semana',lastVisit:'2026-04-02',visitCount:17,status:'em_tratamento'},
-    {id:'m14',nome:'Bianca Mendes',esp:'Fisioterapia',prof:'Dra. Camila Torres',plano:'Premium',freqPresc:'2x/semana',lastVisit:'2026-04-03',visitCount:5,status:'novo'},
-    {id:'m15',nome:'Lucas Ferreira',esp:'Nutrição',prof:'Dr. Rafael Nunes',plano:'Premium',freqPresc:'Semanal',lastVisit:'2026-04-03',visitCount:6,status:'novo'},
-  ]
-  const MOCK_APPTS = [
-    {id:'a1',date:'2026-04-07',time:'08:00',profNome:'Dra. Camila Torres',pacNome:'Ana Beatriz Ferreira',status:'confirmed',sala:'Sala 1'},
-    {id:'a2',date:'2026-04-07',time:'09:00',profNome:'Dra. Camila Torres',pacNome:'Patrícia Almeida',status:'confirmed',sala:'Sala 1'},
-    {id:'a3',date:'2026-04-07',time:'09:00',profNome:'Dr. Rafael Nunes',pacNome:'Carlos Eduardo Lima',status:'confirmed',sala:'Sala 2'},
-    {id:'a4',date:'2026-04-07',time:'10:00',profNome:'Dra. Beatriz Lemos',pacNome:'Fernanda Costa Alves',status:'pending',sala:'Sala 3'},
-    {id:'a5',date:'2026-04-08',time:'08:00',profNome:'Dra. Camila Torres',pacNome:'Roberto Mendonça',status:'pending',sala:'Sala 1'},
-    {id:'a6',date:'2026-04-08',time:'10:00',profNome:'Dr. Rafael Nunes',pacNome:'Juliana Martins',status:'confirmed',sala:'Sala 2'},
-  ]
-  const MOCK_PROFS = [
-    {id:'p1',nome:'Dra. Camila Torres',esp:'Fisioterapia'},
-    {id:'p2',nome:'Dr. Rafael Nunes',esp:'Nutrição'},
-    {id:'p3',nome:'Dra. Beatriz Lemos',esp:'Psicologia'},
-    {id:'p4',nome:'Dr. André Melo',esp:'Fisioterapia'},
-  ]
-
   useEffect(() => {
     async function load() {
       try {
@@ -252,12 +220,9 @@ export default function DashboardPage() {
           getAppointments(profParam),
           getProfessionals(),
         ])
-        let finalPats  = pats?.length  > 0 ? pats  : MOCK_PATS.filter(p => !isProfissional || p.prof === profNome)
-        let finalAppts = appts?.length > 0 ? appts : MOCK_APPTS.filter(a => !isProfissional || a.profNome === profNome)
-        let finalProfs = profs?.length > 0 ? profs : MOCK_PROFS
-        setPatients(finalPats)
-        setAppointments(finalAppts)
-        setProfessionals(finalProfs)
+        setPatients(pats || [])
+        setAppointments(appts || [])
+        setProfessionals(profs || [])
         if (isAdmin) {
           const [s, fins] = await Promise.all([getFinanceSummary(), getFinances()])
           setSummary(s || {})
@@ -265,9 +230,9 @@ export default function DashboardPage() {
         }
       } catch (e) {
         console.error(e)
-        setPatients(MOCK_PATS.filter(p => !isProfissional || p.prof === profNome))
-        setAppointments(MOCK_APPTS.filter(a => !isProfissional || a.profNome === profNome))
-        setProfessionals(MOCK_PROFS)
+        setPatients([])
+        setAppointments([])
+        setProfessionals([])
       } finally {
         setLoading(false)
       }

@@ -77,24 +77,6 @@ const PLANO_BADGE = { Premium:'amber', Fidelidade:'sky', Básico:'navy', Avulso:
 const initials = n => n?.trim().split(' ').filter(Boolean).map(w=>w[0]).slice(0,2).join('').toUpperCase()||'?'
 const fmtDate = d => !d?'—':d.split('-').reverse().join('/')
 
-const MOCK_PATIENTS = [
-  {id:'m1',nome:'Ana Beatriz Ferreira',cont:'(11) 9 8421-3302',nasc:'1990-04-12',esp:'Fisioterapia',prof:'Dra. Camila Torres',plano:'Premium',freqPresc:'2x/semana',obs:'Pós-operatório de joelho.',peso:'68kg',altura:'1,65m',sangue:'A+',lastVisit:'2026-04-02',visitCount:14},
-  {id:'m2',nome:'Carlos Eduardo Lima',cont:'(11) 9 7133-0041',nasc:'1985-11-23',esp:'Nutrição',prof:'Dr. Rafael Nunes',plano:'Fidelidade',freqPresc:'Semanal',obs:'Diabetes tipo 2.',peso:'92kg',altura:'1,78m',sangue:'O+',lastVisit:'2026-04-02',visitCount:18},
-  {id:'m3',nome:'Fernanda Costa Alves',cont:'(11) 9 9200-8821',nasc:'1998-07-05',esp:'Psicologia',prof:'Dra. Beatriz Lemos',plano:'Premium',freqPresc:'Semanal',obs:'Ansiedade generalizada.',peso:'58kg',altura:'1,62m',sangue:'B-',lastVisit:'2026-03-27',visitCount:11},
-  {id:'m4',nome:'Roberto Mendonça',cont:'(11) 9 6543-1100',nasc:'1975-02-18',esp:'Fisioterapia',prof:'Dra. Camila Torres',plano:'Básico',freqPresc:'Quinzenal',obs:'Lombalgia crônica.',peso:'84kg',altura:'1,75m',sangue:'AB+',lastVisit:'2026-02-26',visitCount:6},
-  {id:'m5',nome:'Juliana Martins',cont:'(11) 9 8812-4456',nasc:'2001-09-30',esp:'Nutrição',prof:'Dr. Rafael Nunes',plano:'Premium',freqPresc:'Quinzenal',obs:'Reeducação alimentar.',peso:'72kg',altura:'1,68m',sangue:'O-',lastVisit:'2026-04-01',visitCount:12},
-  {id:'m6',nome:'Marcelo Souza',cont:'(11) 9 9911-2233',nasc:'1988-03-15',esp:'Psicologia',prof:'Dra. Beatriz Lemos',plano:'Premium',freqPresc:'Semanal',obs:'Depressão leve.',peso:'79kg',altura:'1,80m',sangue:'A-',lastVisit:'2026-04-02',visitCount:9},
-  {id:'m7',nome:'Patrícia Almeida',cont:'(11) 9 7654-3210',nasc:'1992-08-22',esp:'Fisioterapia',prof:'Dra. Camila Torres',plano:'Fidelidade',freqPresc:'2x/semana',obs:'Hérnia de disco L4-L5.',peso:'65kg',altura:'1,62m',sangue:'B+',lastVisit:'2026-04-01',visitCount:16},
-  {id:'m8',nome:'Gabriel Teixeira',cont:'(11) 9 9001-2233',nasc:'2000-05-19',esp:'Nutrição',prof:'Dr. Rafael Nunes',plano:'Fidelidade',freqPresc:'Semanal',obs:'Alto rendimento esportivo.',peso:'78kg',altura:'1,83m',sangue:'O+',lastVisit:'2026-04-02',visitCount:20},
-  {id:'m9',nome:'Thiago Nascimento',cont:'(11) 9 8765-4321',nasc:'1989-03-08',esp:'Psicologia',prof:'Dra. Beatriz Lemos',plano:'Fidelidade',freqPresc:'Semanal',obs:'Burnout e estresse crônico.',peso:'82kg',altura:'1,77m',sangue:'O-',lastVisit:'2026-03-31',visitCount:15},
-  {id:'m10',nome:'Isabela Rodrigues',cont:'(11) 9 9876-5432',nasc:'1993-06-17',esp:'Fisioterapia',prof:'Dra. Camila Torres',plano:'Fidelidade',freqPresc:'2x/semana',obs:'Tendinite no ombro direito.',peso:'61kg',altura:'1,60m',sangue:'A+',lastVisit:'2026-04-02',visitCount:13},
-  {id:'m11',nome:'Diego Barbosa',cont:'(11) 9 6655-4433',nasc:'1987-07-25',esp:'Fisioterapia',prof:'Dra. Camila Torres',plano:'Premium',freqPresc:'2x/semana',obs:'Reabilitação pós-fratura tornozelo.',peso:'88kg',altura:'1,80m',sangue:'AB-',lastVisit:'2026-04-01',visitCount:10},
-  {id:'m12',nome:'Felipe Cunha',cont:'(11) 9 7766-5544',nasc:'1991-12-28',esp:'Psicologia',prof:'Dra. Beatriz Lemos',plano:'Premium',freqPresc:'Semanal',obs:'TAG — transtorno de ansiedade.',peso:'77kg',altura:'1,75m',sangue:'A+',lastVisit:'2026-04-01',visitCount:11},
-  {id:'m13',nome:'Bruno Cavalcanti',cont:'(11) 9 5533-8899',nasc:'1983-08-07',esp:'Fisioterapia',prof:'Dr. André Melo',plano:'Fidelidade',freqPresc:'2x/semana',obs:'Gonartrose bilateral.',peso:'95kg',altura:'1,76m',sangue:'AB+',lastVisit:'2026-04-02',visitCount:17},
-  {id:'m14',nome:'Bianca Mendes',cont:'(11) 9 9922-7788',nasc:'2003-07-11',esp:'Fisioterapia',prof:'Dra. Camila Torres',plano:'Premium',freqPresc:'2x/semana',obs:'Lesão ligamentar no tornozelo.',peso:'52kg',altura:'1,58m',sangue:'B+',lastVisit:'2026-04-03',visitCount:5},
-  {id:'m15',nome:'Lucas Ferreira',cont:'(11) 9 8833-6677',nasc:'1995-01-17',esp:'Nutrição',prof:'Dr. Rafael Nunes',plano:'Premium',freqPresc:'Semanal',obs:'Ganho de massa muscular.',peso:'74kg',altura:'1,80m',sangue:'O+',lastVisit:'2026-04-03',visitCount:6},
-]
-
 const EMPTY = { nome:'',cont:'',nasc:'',esp:'Fisioterapia',prof:'',plano:'Básico',freqPresc:'Semanal',obs:'',peso:'',altura:'',sangue:'' }
 
 export default function PatientsPage() {
@@ -117,22 +99,10 @@ export default function PatientsPage() {
       if (filtEsp)   params.esp   = filtEsp
       if (filtPlano) params.plano = filtPlano
       const data = await getPatients(params)
-      if (data && data.length > 0) {
-        setPatients(data)
-      } else {
-        // fallback mock
-        let mock = MOCK_PATIENTS
-        if (isProfissional && profNome) mock = mock.filter(p => p.prof === profNome)
-        if (filtEsp)   mock = mock.filter(p => p.esp   === filtEsp)
-        if (filtPlano) mock = mock.filter(p => p.plano === filtPlano)
-        setPatients(mock)
-      }
-    } catch {
-      let mock = MOCK_PATIENTS
-      if (isProfissional && profNome) mock = mock.filter(p => p.prof === profNome)
-      if (filtEsp)   mock = mock.filter(p => p.esp   === filtEsp)
-      if (filtPlano) mock = mock.filter(p => p.plano === filtPlano)
-      setPatients(mock)
+      setPatients(data || [])
+    } catch (e) {
+      console.error(e)
+      setPatients([])
     } finally { setLoading(false) }
   }
 
